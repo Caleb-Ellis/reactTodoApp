@@ -1,10 +1,23 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 require('./css/index.css');
+import {Router, Route, browserHistory, Link} from 'react-router';
 
 // Module requires
 var TodoItem = require('./todoItem');
 var AddItem = require('./addItem');
+var About = require('./about');
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <Router history={browserHistory}>
+        <Route path={'/'} component={TodoComponent}></Route>
+        <Route path={'/about'} component={About}></Route>
+      </Router>
+    );
+  }
+});
 
 // Create component
 var TodoComponent = React.createClass({
@@ -27,6 +40,7 @@ var TodoComponent = React.createClass({
 
     return(
       <div id="todo-list">
+        <Link to={'/about'}>About</Link>
         <p>Crap I need to do...</p>
         <ul>{todos}</ul>
         <AddItem onAdd={this.onAdd}/>
@@ -51,7 +65,8 @@ var TodoComponent = React.createClass({
       todos: updatedTodos
     });
   }
+
 });
 
 // Put component into html page
-ReactDOM.render(<TodoComponent mssg="Hey guys!"/>, document.getElementById('todo-wrapper'));
+ReactDOM.render(<App />, document.getElementById('todo-wrapper'));
